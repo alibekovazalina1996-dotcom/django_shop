@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавление товара — Интернет-магазин{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">Добавить новый товар</h2>
+        
+        <!-- Вывод сообщений об успехе или ошибке -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
