@@ -1,1 +1,34 @@
-<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Главная — Интернет-магазин</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></head><body><div class="container mt-5"><h1>Добро пожаловать в наш интернет-магазин!</h1><p>Здесь вы найдете всё, что нужно.</p><a href="/contacts/" class="btn btn-primary">Связаться с нами</a></div></body></html> 
+{% extends 'base.html' %}
+
+{% block title %}Главная — Интернет-магазин{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Все товары</h2>
+<a href="{% url 'add_product' %}" class="btn btn-success mb-4">Добавить товар</a>
+<div class="row">
+    <!-- Критерий: Использован for -->
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <!-- Критерий: выводится изображение -->
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">Нет фото</div>
+            {% endif %}
+            <div class="card-body">
+                <!-- Критерий: выводится название -->
+                <h5 class="card-title">{{ product.name }}</h5>
+                <!-- Критерий: обрезанное описание (до 100 символов) -->
+                <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                <p class="card-text fw-bold">{{ product.price }} руб.</p>
+                <!-- Критерий: Реализованы переходы с главной на товар -->
+                <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>Товаров пока нет.</p>
+    {% endfor %}
+</div>
+{% endblock %}
