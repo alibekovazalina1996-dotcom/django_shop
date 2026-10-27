@@ -8,3 +8,4 @@ def home(request):
         print(f"{product.name} - {product.price} руб.")
         
     return render(request, 'catalog/home.html')
+ 
